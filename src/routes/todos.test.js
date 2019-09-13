@@ -3,12 +3,13 @@ const db = require("../db");
 const server = require("../server");
 
 describe("POST /todos", () => {
-  it("should return a status of 201 when succesfully created", async () => {
-    const res = await request(server).post("/todos", {
-      description: "a cool task"
-    });
-
-    expect(res.status).toBe(201);
+  it("should return a status of 201 when succesfully created", () => {
+    request(server)
+      .post("/todos")
+      .send({ description: "cool" })
+      .then(res => {
+        expect(res.status).toBe(201);
+      });
   });
 
   it.skip("should add a new todo to the database", async () => {

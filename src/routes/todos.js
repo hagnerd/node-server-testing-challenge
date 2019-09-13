@@ -12,6 +12,8 @@ function validateTodoInput(req, res, next) {
   }
 }
 
-router.post("/", validateTodoInput, async (req, res) => {});
+router.post("/", validateTodoInput, async (req, res) => {
+  res.status(201);
+});
 
 module.exports = router;
