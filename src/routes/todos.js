@@ -17,12 +17,13 @@ router.post("/", validateTodoInput, async (req, res) => {
   const { description } = req.body;
 
   try {
-    const todo = await Todo.createTodo({ description });
+    const todo = await Todo.createTodo(description);
 
     res.status(201).json({
       todo
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       error: "Internal server error",
       message: err.message

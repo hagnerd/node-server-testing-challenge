@@ -2,6 +2,10 @@ const request = require("supertest");
 const db = require("../db");
 const server = require("../server");
 
+beforeEach(async () => {
+  await db.from("todos").truncate();
+});
+
 describe("POST /todos", () => {
   it("should return a status of 201 when succesfully created", () => {
     request(server)
@@ -29,5 +33,14 @@ describe("POST /todos", () => {
       });
   });
 
-  it.skip("should return the todo upon creation", () => {});
+  it("should return the todo upon creation", () => {
+    request(server)
+      .post("/todos")
+      .send({ description: "a really cool task" })
+      .then(todo => {
+        expect(todo.id).toBe(1);
+        expect(todo.description).toBe("a really cool task");
+        expect(todo.completed).toBe(false);
+      });
+  });
 });
