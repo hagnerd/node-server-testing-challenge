@@ -12,14 +12,22 @@ describe("POST /todos", () => {
       });
   });
 
-  it.skip("should add a new todo to the database", async () => {
-    await request(server).post("/todos", { description: "a cool task" });
-
-    const todos = await db.select("*").from("todos");
-
-    expect(todos.length).toBe(1);
-    expect(todos[0].description).toBe("a cool task");
-    expect(todos[0].completed).toBe(false);
+  it("should add a new todo to the database", () => {
+    request(server)
+      .post("/todos")
+      .send({ description: "a cool task" })
+      .then(() => {
+        console.log("what");
+        db.select("*")
+          .from("todos")
+          .then(todos => {
+            console.log(todos);
+            expect(todos.length).toBe(1);
+            expect(todos[0].description).toBe("a cool task");
+            expect(todos[0].completed).toBe(false);
+          });
+      });
   });
+
   it.skip("should return the todo upon creation", () => {});
 });

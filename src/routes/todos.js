@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const Todo = require("../controllers/todos");
 
 function validateTodoInput(req, res, next) {
   const { description } = req.body;
@@ -13,7 +14,20 @@ function validateTodoInput(req, res, next) {
 }
 
 router.post("/", validateTodoInput, async (req, res) => {
-  res.status(201);
+  const { description } = req.body;
+
+  try {
+    const todo = await Todo.createTodo({ description });
+
+    res.status(201).json({
+      todo
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "Internal server error",
+      message: err.message
+    });
+  }
 });
 
 module.exports = router;
