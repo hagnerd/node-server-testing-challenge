@@ -7,5 +7,11 @@ module.exports = {
     connection: {
       filename: "./data/db.db3"
     }
+  },
+  testing: {
+    client: "sqlite3",
+    connection: {
+      filename: "./data/testing.db3"
+    }
   }
 };
