@@ -27,11 +27,21 @@ async function deleteTodo(id) {
     .where({ id })
     .delete();
 
-  return !!res;
+  return res === 1;
+}
+
+async function getTodoById(id) {
+  const [todo] = await db
+    .select("*")
+    .from("todos")
+    .where({ id });
+
+  return todo ? todo : null;
 }
 
 module.exports = {
   getAllTodos,
   createTodo,
-  deleteTodo
+  deleteTodo,
+  getTodoById
 };
